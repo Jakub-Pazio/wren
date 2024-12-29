@@ -1,16 +1,16 @@
-package nickname_test
+package client_test
 
 import (
 	"testing"
 
-	"github.com/Jakub-Pazio/Wren/package/client/nickname"
+	"github.com/Jakub-Pazio/wren/pkg/client"
 )
 
 func TestNewNick(t *testing.T) {
 	t.Run("creating valid nickname", func(t *testing.T) {
 		validNick := "jpazio"
 
-		nn, err := nickname.New(validNick)
+		nn, err := client.New(validNick)
 
 		if err != nil {
 			t.Errorf("should not error but got %q", err)
@@ -27,13 +27,13 @@ func TestNewNick(t *testing.T) {
 			nickname      string
 			expectedError error
 		}{
-			{"dot in username", "j.pazio", nickname.ForbiddenCharError},
-			{"empty username", "", nickname.EmptyNicknameError},
-			{"starting with '%' character", "%jpazio", nickname.ForbiddenStartingCharError},
+			{"dot in username", "j.pazio", client.ForbiddenCharError},
+			{"empty username", "", client.EmptyNicknameError},
+			{"starting with '%' character", "%jpazio", client.ForbiddenStartingCharError},
 		}
 
 		for _, tc := range cases {
-			_, err := nickname.New(tc.nickname)
+			_, err := client.New(tc.nickname)
 			if err == nil {
 				t.Errorf("%v: should return error %v but did not", tc.name, err)
 			}
